@@ -1,0 +1,61 @@
+
+<launch>
+    <!-- <param name="use_sim_time" value="true"/> -->
+    <!-- run rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rslidar_pointcloud)/rviz_cfg/rslidar.rviz" required="true"/>
+
+    <!-- run world->map tf-->
+    <node name="world_to_map" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 /world /map 20" respawn="true" output="log" />
+
+    <!-- car_tf node -->
+    <arg name="lidar_trans_x" default="0.0" />
+    <arg name="lidar_trans_y" default="0.0" />
+    <arg name="lidar_trans_z" default="0.0" />
+
+    <arg name="lidar_rotation_roll" default="0.0" />
+    <arg name="lidar_rotation_pitch" default="0.0" />
+    <arg name="lidar_rotation_yaw" default="0.0" />
+
+    <arg name="map_frame" default="map" />
+    <arg name="base_link_frame" default="base_link" />
+    <arg name="lidar_frame_id" default="rslidar" />
+
+    <node name="car_tf" pkg="car_tf_broadcaster" type="car_tf_broadcaster" output="screen">
+        <param name="lidar_trans_x" type="double" value="$(arg lidar_trans_x)" />
+        <param name="lidar_trans_y" type="double" value="$(arg lidar_trans_y)" />
+        <param name="lidar_trans_z" type="double" value="$(arg lidar_trans_z)" />
+
+        <param name="lidar_rotation_roll" type="double" value="$(arg lidar_rotation_roll)" />
+        <param name="lidar_rotation_pitch" type="double" value="$(arg lidar_rotation_pitch)" />
+        <param name="lidar_rotation_yaw" type="double" value="$(arg lidar_rotation_yaw)" />
+        
+        <param name="map_frame" type="string" value="$(arg map_frame)" />
+        <param name="base_link_frame" type="string" value="$(arg base_link_frame)" />
+        <param name="lidar_frame_id" type="string" value="$(arg lidar_frame_id)" />
+
+    </node>
+
+    <!-- gps node -->
+    <!-- <arg name="gnss_port_name" default="/dev/ttyTHS0" />
+    <arg name="gnss_baud_rate" default="230400" />
+    <arg name="gnss_nmea_head" default="GPCHC" />
+    <arg name="gnss_org_lat" default="32.02389143" />
+    <arg name="gnss_org_lon" default="118.90322224" />
+    <arg name="gnss_is_pub_sentence" default="true" />
+    <arg name="gnss_is_pub_pose" default="true" />
+    <arg name="gnss_is_broadcast_tf" default="false" />
+    <arg name="gnss_sentence_topic" default="nmea_sentence" />
+    <arg name="gnss_pose_topic" default="gnss_pose" />
+    <node name="hc_nmea_driver" pkg="nmea_driver" type="nmea_driver" respawn="true" output="screen">
+        <param name="port_name" type="string" value="$(arg gnss_port_name)" />
+        <param name="baud_rate" type="int" value="$(arg gnss_baud_rate)" />
+        <param name="nmea_head" type="string" value="$(arg gnss_nmea_head)" />
+        <param name="org_lat" type="double" value="$(arg gnss_org_lat)" />
+        <param name="org_lon" type="double" value="$(arg gnss_org_lon)" />
+        <param name="is_pub_sentence" type="bool" value="$(arg gnss_is_pub_sentence)" />
+        <param name="is_pub_pose" type="bool" value="$(arg gnss_is_pub_pose)" />
+        <param name="is_broadcast_tf" type="bool" value="$(arg gnss_is_broadcast_tf)" />
+        <param name="sentence_topic" type="string" value="$(arg gnss_sentence_topic)" />
+        <param name="pose_topic" type="string" value="$(arg gnss_pose_topic)" />
+    </node> -->
+</launch>

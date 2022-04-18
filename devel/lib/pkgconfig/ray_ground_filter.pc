@@ -1,0 +1,8 @@
+prefix=/home/ros/suv_car/devel
+
+Name: ray_ground_filter
+Description: Description of ray_ground_filter
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: nodelet pcl_ros pluginlib roscpp sensor_msgs

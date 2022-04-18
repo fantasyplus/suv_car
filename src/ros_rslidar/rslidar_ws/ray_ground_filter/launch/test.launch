@@ -1,0 +1,15 @@
+<launch>
+    <!-- 1.启动 nodelet manager（管理器） -->
+    <node pkg="nodelet" type="nodelet" args="manager" name="rslidar_pre" output="screen" />
+    <!-- 2.添加节点voxel_filter -->
+    <node pkg="nodelet" type="nodelet" args="load voxel_filter/VoxelFilter rslidar_pre" name="voxel_filter" output="screen">
+        <!-- <param name="value" value="100"/> -->
+    </node>
+    <!-- 3.添加节点ray_ground_filter xiaowang的输出是ergou的输入 -->
+    <node pkg="nodelet" type="nodelet" args="load ray_ground_filter/RayGound rslidar_pre" name="ray_ground_filter" output="screen">
+        <!-- <param name="value" value="-50"/> -->
+        <remap from="/ray_ground_filter/rspoints" to="/voxel_filter/filtered_points" />
+    </node>
+    
+
+</launch>

@@ -1,0 +1,5 @@
+<library path="lib/libvoxel_filter">
+    <class type="rslidar_pre::VoxelFilter" base_class_type="nodelet::Nodelet" name="voxel_filter/VoxelFilter">
+        <description>自定义插件</description>
+    </class>
+</library>

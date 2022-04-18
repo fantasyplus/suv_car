@@ -1,0 +1,8 @@
+prefix=/home/ros/suv_car/install
+
+Name: plane_ground_filter
+Description: Description of plane_ground_filter
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

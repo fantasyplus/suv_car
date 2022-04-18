@@ -1,0 +1,5 @@
+<library path="lib/librayground">
+    <class type="rslidar_pre::RayGound" base_class_type="nodelet::Nodelet" name="ray_ground_filter/RayGound">
+        <description>自定义插件</description>
+    </class>
+</library>

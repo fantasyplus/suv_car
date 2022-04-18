@@ -1,0 +1,4 @@
+KERNEL=="ttyTHS0",SUBSYSTEM=="tty",MODE="0666"
+# sudo service udev reload
+# sudo service udev restart
+# sudo reboot

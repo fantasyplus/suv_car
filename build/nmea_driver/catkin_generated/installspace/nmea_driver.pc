@@ -1,0 +1,8 @@
+prefix=/home/ros/suv_car/install
+
+Name: nmea_driver
+Description: Description of nmea_driver
+Version: 0.1.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

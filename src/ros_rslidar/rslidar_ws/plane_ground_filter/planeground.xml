@@ -1,0 +1,5 @@
+<library path="lib/libplaneground">
+    <class type="rslidar_pre::PlaneGround" base_class_type="nodelet::Nodelet" name="plane_ground_filter/PlaneGround">
+        <description>自定义插件</description>
+    </class>
+</library>
