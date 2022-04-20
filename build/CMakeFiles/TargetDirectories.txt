@@ -240,9 +240,9 @@
 /home/ros/suv_car/build/ros_rslidar/rslidar_ws/voxel_filter/CMakeFiles/voxel_filter.dir
 /home/ros/suv_car/build/xavier_upstart/CMakeFiles/install/strip.dir
 /home/ros/suv_car/build/xavier_upstart/CMakeFiles/install/local.dir
+/home/ros/suv_car/build/xavier_upstart/CMakeFiles/rebuild_cache.dir
+/home/ros/suv_car/build/xavier_upstart/CMakeFiles/edit_cache.dir
+/home/ros/suv_car/build/xavier_upstart/CMakeFiles/test.dir
 /home/ros/suv_car/build/xavier_upstart/CMakeFiles/install.dir
 /home/ros/suv_car/build/xavier_upstart/CMakeFiles/list_install_components.dir
-/home/ros/suv_car/build/xavier_upstart/CMakeFiles/rebuild_cache.dir
-/home/ros/suv_car/build/xavier_upstart/CMakeFiles/test.dir
-/home/ros/suv_car/build/xavier_upstart/CMakeFiles/edit_cache.dir
-/home/ros/suv_car/build/xavier_upstart/CMakeFiles/2.dir
+/home/ros/suv_car/build/xavier_upstart/CMakeFiles/gps_saver.dir

@@ -1,0 +1,6 @@
+
+<launch>
+    <!-- <param name="use_sim_time" value="true"/> -->
+    <!-- run rviz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rslidar_pointcloud)/rviz_cfg/rslidar.rviz" required="true"/>
+</launch>
