@@ -53,8 +53,6 @@
     </node>
 
     
-
-
     <!-- 1.启动 nodelet manager（管理器） -->
     <node pkg="nodelet" type="nodelet" args="manager" name="rslidar_pre" output="screen" />
     <!-- 2.添加节点voxel_filter -->
