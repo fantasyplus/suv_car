@@ -9,7 +9,7 @@ cd src/planner/ompl/ompl-1.4.2_byxt
 
 # 再单独编译mcp_msgs
 ```
-cd suc_car
+cd suv_car
 
 catkin_make -DCATKIN_WHITELIST_PACKAGES="mpc_msgs"
 ```
