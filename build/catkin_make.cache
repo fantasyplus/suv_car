@@ -1,2 +1,0 @@
-car_tf_broadcaster:nmea_driver:ros_rslidar/rslidar:ros_rslidar/rslidar_driver:ros_rslidar/rslidar_msgs:ros_rslidar/rslidar_pointcloud:ros_rslidar/rslidar_sync:ros_rslidar/rslidar_ws/plane_ground_filter:ros_rslidar/rslidar_ws/ray_ground_filter:ros_rslidar/rslidar_ws/voxel_filter:xavier_upstart
--DCATKIN_DEVEL_PREFIX=/home/ros/suv_car/devel -DCMAKE_INSTALL_PREFIX=/home/ros/suv_car/install -G Unix Makefiles

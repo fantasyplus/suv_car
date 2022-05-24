@@ -4,7 +4,7 @@
 #include <tf/transform_broadcaster.h>
 #include <std_msgs/Header.h>
 #include <iostream>
-
+#include <fstream>
 #include "serial_util.h"
 #include "nmea_parser.h"
 #include "status_protocol.h"
@@ -115,6 +115,7 @@ int main(int argc, char **argv)
                 pub_sentence.publish(ns);
             }
 
+
             double x, y, z;
             blh2xyz(sp.lat, sp.lon, sp.alt, org_lat, org_lon, x, y, z);
 
@@ -149,6 +150,11 @@ int main(int argc, char **argv)
             nav_diagram.yaw = static_cast<float>(sp.yaw / M_PI * 180.0);
             nav_diagram.lon = sp.lon / M_PI * 180.0;
             nav_diagram.lat = sp.lat / M_PI * 180.0;
+
+            std::ofstream out("/home/nvidia/exper/point2.txt", std::ios::app);
+            out.precision(12);
+            out << nav_diagram.lon << ' ' << nav_diagram.lat << std::endl;
+            out.close();
 
             if (-1 == sendto(send_sock, &nav_diagram, sizeof(nav_diagram), 0, (struct sockaddr *)&send_hostaddr, sizeof(send_hostaddr)))
             {

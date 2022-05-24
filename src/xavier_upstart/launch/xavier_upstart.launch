@@ -4,8 +4,8 @@
     <arg name="gnss_port_name" default="/dev/ttyTHS0" />
     <arg name="gnss_baud_rate" default="230400" />
     <arg name="gnss_nmea_head" default="GPCHC" />
-    <arg name="gnss_org_lat" default="32.02778534" />
-    <arg name="gnss_org_lon" default="118.8564381" />
+    <arg name="gnss_org_lat" default="32.0242100" />
+    <arg name="gnss_org_lon" default="118.89928833" />
     <arg name="gnss_is_pub_sentence" default="true" />
     <arg name="gnss_is_pub_pose" default="true" />
     <arg name="gnss_is_broadcast_tf" default="false" />
@@ -45,4 +45,10 @@
         <param name="verbose" type="bool" value="$(arg chasis_verbose)" />
     </node>
 
+     <!-- run chasis send & recv control message via can0(STM32 can2) -->
+    <node pkg="socketcan_bridge" type="socketcan_to_topic_node" name="socketcan_to_topic_node" output="screen"/>
+    <node pkg="chasis_driver" type="chasis_status_node" name="chasis_status_node" output="screen" /> 
+    <node pkg="chasis_driver" type="chasis_control_node" name="chasis_control_node" output="screen" /> 
+    <node pkg="socketcan_bridge" type="topic_to_socketcan_node" name="topic_to_socketcan_node" output="screen"/>
+    
 </launch>

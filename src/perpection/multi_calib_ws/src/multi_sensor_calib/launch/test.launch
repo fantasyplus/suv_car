@@ -1,0 +1,7 @@
+<launch>
+
+    <node pkg="multi_sensor_calib" type="multi_sensor_calib_node" name="multi_sensor_calib_node" output="screen"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d /home/vivwimp/multi_calib_ws/src/multi_sensor_calib/rviz/test.rviz" required="true"/>
+
+</launch>

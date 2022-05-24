@@ -1,0 +1,2 @@
+multi_sensor_calib
+-DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_DEVEL_PREFIX=/home/vivwimp/multi_calib_ws/devel -DCMAKE_INSTALL_PREFIX=/home/vivwimp/multi_calib_ws/install -G Unix Makefiles

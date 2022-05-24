@@ -6,8 +6,13 @@ find_package(catkin REQUIRED COMPONENTS
   nmea_msgs
   roscpp
   tf
+  tf2_msgs
+  tf2_eigen
+  tf2_geometry_msgs
+  tf2_ros
   std_msgs
 )
+find_package(Boost REQUIRED COMPONENTS system)
 
 catkin_package()
 
@@ -20,15 +25,15 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
 )
 
-add_executable(${PROJECT_NAME}
+add_executable(car_tf_broadcaster
     src/car_tf_broadcaster.cpp
 )
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(car_tf_broadcaster
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
 )
 
-add_dependencies(${PROJECT_NAME} 
+add_dependencies(car_tf_broadcaster
   ${catkin_EXPORTED_TARGETS}
 )

@@ -1,0 +1,134 @@
+<launch>
+
+    <!-- rslidar 驱动 -->
+
+    <node pkg="rslidar_sdk" name="rslidar_sdk_node" type="rslidar_sdk_node" output="screen">
+         <param name="config_path" value=""/>
+    </node>
+
+
+    <!-- <node pkg="multi_sensor_calib" type="multi_sensor_calib_node" name="multi_sensor_calib_node" output="screen"/> -->
+
+    <!-- <arg name="input_topic" default="/rslidar_points_recover" /> -->
+    <arg name="input_topic" default="/rslidar_points" />
+
+    <arg name="no_ground_point_topic" default="/points_no_ground"/>
+    <arg name="ground_point_topic" default="/points_ground"/>
+    <arg name="all_points_topic" default="/all_points"/>
+
+    <!-- clip the points above sensor_height+clip_height -->
+    <arg name="clip_height" default="4.0"/>
+    <!-- the height of lidar position  -->
+    <arg name="sensor_height" default="1.77"/>
+    <!-- the min distance to be remove -->
+    <arg name="min_distance" default="2.0"/>
+    <!-- the max distance to be remove -->
+    <arg name="max_distance" default="75.0"/>
+    <!-- we use 32 lidar -->
+    <arg name="sensor_model" default="32"/>
+    <!-- Num of Iteration -->
+    <arg name="num_iter" default="3"/>
+    <!-- Num of LPR -->
+    <arg name="num_lpr" default="20"/>
+    <!-- Seeds Threshold -->
+    <arg name="th_seeds" default="1.2"/>
+    <!-- Distance Threshold -->
+    <arg name="th_dist" default="0.3"/>
+
+    
+    
+
+    <!-- 1.启动 nodelet manager（管理器） -->
+    <node pkg="nodelet" type="nodelet" args="manager" name="rslidar_pre" output="screen" />
+    <!-- 2.添加节点voxel_filter -->
+    <node pkg="nodelet" type="nodelet" args="load voxel_filter/VoxelFilter rslidar_pre" name="voxel_filter" output="screen">
+        <!-- <param name="value" value="100"/> -->
+    </node>
+    <!-- 3.添加节点ray_ground_filter xiaowang的输出是ergou的输入 -->
+    <node pkg="nodelet" type="nodelet" args="load plane_ground_filter/PlaneGround rslidar_pre" name="plane_ground_filter" output="screen">
+        <!-- <param name="value" value="-50"/> -->
+        <param name="input_topic" value="$(arg input_topic)"/>
+        <param name="no_ground_point_topic" value="$(arg no_ground_point_topic)"/>
+        <param name="ground_point_topic" value="$(arg ground_point_topic)"/>
+        <param name="all_points_topic" value="$(arg all_points_topic)"/>
+
+        <param name="sensor_height" value="$(arg sensor_height)" />
+        <param name="clip_height" value="$(arg clip_height)" />
+        <param name="min_distance" value="$(arg min_distance)" />
+        <param name="max_distance" value="$(arg max_distance)" />
+        <param name="sensor_model" value="$(arg sensor_model)" />
+        <param name="num_iter" value="$(arg num_iter)" />
+        <param name="num_lpr" value="$(arg num_lpr)" />
+        <param name="th_seeds" value="$(arg th_seeds)" />
+        <param name="th_dist" value="$(arg th_dist)" />
+
+        <remap from="/plane_ground_filter/filtered_points" to="/voxel_filter/filtered_points" />
+    </node>
+
+    <!-- run tf-->
+    <node name="world_to_map" pkg="tf" type="static_transform_publisher" args="3737.45190044 755.673438937 0 0 0 0 /world /map 50" respawn="true" output="log" />
+
+    <!-- gps node -->
+    <arg name="gnss_port_name" default="/dev/ttyTHS0" />
+    <arg name="gnss_baud_rate" default="230400" />
+    <arg name="gnss_nmea_head" default="GPCHC" />
+    <arg name="gnss_org_lat" default="32.0242100" />
+    <arg name="gnss_org_lon" default="118.89928833" />
+    <arg name="gnss_is_pub_sentence" default="true" />
+    <arg name="gnss_is_pub_pose" default="true" />
+    <!-- <arg name="gnss_is_broadcast_tf" default="false" /> -->
+    <arg name="gnss_is_broadcast_tf" default="true" />
+    <arg name="gnss_sentence_topic" default="nmea_sentence" />
+    <arg name="gnss_pose_topic" default="gnss_pose" />
+    <node name="hc_nmea_driver" pkg="nmea_driver" type="nmea_driver" respawn="true" output="screen">
+        <param name="port_name" type="string" value="$(arg gnss_port_name)" />
+        <param name="baud_rate" type="int" value="$(arg gnss_baud_rate)" />
+        <param name="nmea_head" type="string" value="$(arg gnss_nmea_head)" />
+        <param name="org_lat" type="double" value="$(arg gnss_org_lat)" />
+        <param name="org_lon" type="double" value="$(arg gnss_org_lon)" />
+        <param name="is_pub_sentence" type="bool" value="$(arg gnss_is_pub_sentence)" />
+        <param name="is_pub_pose" type="bool" value="$(arg gnss_is_pub_pose)" />
+        <param name="is_broadcast_tf" type="bool" value="$(arg gnss_is_broadcast_tf)" />
+        <param name="sentence_topic" type="string" value="$(arg gnss_sentence_topic)" />
+        <param name="pose_topic" type="string" value="$(arg gnss_pose_topic)" />
+    </node>
+
+    <!-- car_tf node -->
+    <arg name="lidar_trans_x" default="4.34" />
+    <arg name="lidar_trans_y" default="-0.58" />
+    <arg name="lidar_trans_z" default="0.0" />
+
+    <arg name="lidar_rotation_roll" default="0.0" />
+    <arg name="lidar_rotation_pitch" default="0.0" />
+    <arg name="lidar_rotation_yaw" default="0.0" />
+
+    <arg name="map_frame" default="map" />
+    <arg name="base_link_frame" default="base_link" />
+    <arg name="lidar_frame_id" default="rslidar" />
+
+    <arg name="use_rviz_start_cartf" default="false" />
+
+    <node name="car_tf" pkg="car_tf_broadcaster" type="car_tf_broadcaster" output="screen">
+        <param name="lidar_trans_x" type="double" value="$(arg lidar_trans_x)" />
+        <param name="lidar_trans_y" type="double" value="$(arg lidar_trans_y)" />
+        <param name="lidar_trans_z" type="double" value="$(arg lidar_trans_z)" />
+
+        <param name="lidar_rotation_roll" type="double" value="$(arg lidar_rotation_roll)" />
+        <param name="lidar_rotation_pitch" type="double" value="$(arg lidar_rotation_pitch)" />
+        <param name="lidar_rotation_yaw" type="double" value="$(arg lidar_rotation_yaw)" />
+        
+        <param name="map_frame" type="string" value="$(arg map_frame)" />
+        <param name="base_link_frame" type="string" value="$(arg base_link_frame)" />
+        <param name="lidar_frame_id" type="string" value="$(arg lidar_frame_id)" />
+
+        <param name="use_rviz_start" type="bool" value="$(arg use_rviz_start_cartf)" />
+
+    </node>
+
+
+
+    <!-- <node name="rviz" pkg="rviz" type="rviz"  args="-d /home/vivwimp/catkin_ws_rsSDK/src/rslidar_ws/plane_ground_filter/rviz/rslidar.rviz" /> -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find plane_ground_filter)/rviz/map.rviz" required="true"/> -->
+    
+
+</launch>

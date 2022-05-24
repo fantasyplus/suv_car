@@ -1,0 +1,8 @@
+prefix=/home/vivwimp/multi_calib_ws/install
+
+Name: multi_sensor_calib
+Description: Description of multi_sensor_calib
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: pcl_ros roscpp sensor_msgs

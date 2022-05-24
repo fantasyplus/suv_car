@@ -1,8 +1,0 @@
-prefix=/home/ros/suv_car/install
-
-Name: xavier_upstart
-Description: Description of xavier_upstart
-Version: 0.1.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
